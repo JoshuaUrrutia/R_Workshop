@@ -4,7 +4,7 @@ layout: default
 
 
 # Introduction to R
-R is Turing Complete programming language, which means you can use R to do anything you can do in any other programming language. However, certain operations are easier to do in R, and other operations are easier to do in other languages. For example R is really good at working with dataframes and vectors, but is a little clunky when trying to manipulate strings of text. R is free, open-source, and has a large enthusiastic community of developers particularly for statistics and data science.
+R is Turing Complete programming language, which means you can use R to do anything you can do in any other programming language. However, certain operations are easier to do in R and other operations are easier to do in other languages. For example R is really good at working with dataframes and vectors, but is a little clunky when trying to manipulate strings of text. R is free, open-source, and has a large enthusiastic community of developers particularly for statistics and data science applications.
 
 
 ## Downloading R and R Studio
@@ -78,6 +78,16 @@ b[c(1,3)]
 ```
 
 Elements can also be combined into matrices and arrays. Matrices are two-dimensional representations (columns and rows) of elements, all the elements must be the same type and all columns must be the same length. Arrays are similar to matrices but can have more than two dimensions. We aren't going to go into explore matrices or arrays in detail. Instead we'll focus on data frames.
+
+### Coercing data types
+There are occasions where data will get imported as a certain type, but you will want to use a different type. You can coercie data from one type to another using the `as.datatype()` commands:
+```
+a <- as.character(a)
+class(a)
+b <- as.numeric(b[3,4,5])
+class(b)
+```
+
 
 ### Data Frames
 Data frames are similar to matrices but more general, all columns in a dataframe don't have to have the same data type (you can mix numeric and characters). Let's construct and example data frame of RNA-seq counts:

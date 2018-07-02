@@ -22,8 +22,14 @@ Lets say you're only interested in genes that achieve a particular expression le
 counts[counts$LNCaP > 100,]    # Return rows that have a read count greater than 100 in LNCaP, and every column
 ```
 
-Ok, that's enough with the small examples, lets work with some real data. So we have a dataframe of BRD4-ChIP peaks from MR42D + MDV treated cells [here](https://ohsu.box.com/s/37e6vnkz1p54um3yutwqss2541pce294). We also have a dataframe of differentially expressed genes with BRD4-Knockdown in MR42D (https://ohsu.box.com/s/xea7lcz848idtttiw808vabvmja5jnj8). What genes are BRD4-bound, and going down with siBRD4? I understand that seems like a big task, but lets break it down into steps:
-1.  
+### Merging Dataframes
+Outer join vs inner join.
+Renaming Columns
+using columns with different names
+
+Ok, that's enough with the small examples, lets work with some real data. So we have a dataframe of BRD4-ChIP peaks from MR42D + MDV treated cells [here](https://ohsu.box.com/s/37e6vnkz1p54um3yutwqss2541pce294). We also have a dataframe of differentially expressed genes with [BRD4-Knockdown in MR42D](https://ohsu.box.com/s/xea7lcz848idtttiw808vabvmja5jnj8). What genes are BRD4-bound, and going down with siBRD4? I understand that seems like a big task, but lets break it down into steps:
+1.   Download the Dataframes and import into R Studio
+2.   
 
 
 
