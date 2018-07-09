@@ -28,7 +28,7 @@ counts[counts$Gene %in% c("KLK3","AR"),]
 This command searches the `$Gene` column of the counts dataframe, and only returns rows where the gene name is equal to KLK3 or AR.
 
 ### Merging Dataframes
-In many cases it is useful to merge dataframes by a common column. You can perform either an inner join (only what's in common between two tables), or an outer join (all values from both tables are saved). Let's create a new dataframe of counts, we'll call it counts2:
+In many cases it is useful to merge dataframes by a common column. You can perform either an inner join (only save what's in common between two tables), or an outer join (all values from both tables are saved). Let's create a new dataframe of counts, we'll call it counts2:
 ```r
 h <- c("POU3F2","AR","CHGA","SYP") # vector of gene names
 i <- c(500,0,200,400)    # vector of gene counts for PC3
@@ -45,6 +45,7 @@ merge(counts,counts2,all=TRUE)    # outer join
 merge(counts,counts2,all.x = TRUE)   # inner join preserving counts rows
 merge(counts,counts2,all.y = TRUE)  # inner join preserving counts2 rows
 ```
+
 
 Ok, that's enough with the small examples, lets work with some real data. So we have a dataframe of BRD4-ChIP peaks from MR42D + MDV treated cells [here](https://ohsu.box.com/s/37e6vnkz1p54um3yutwqss2541pce294). We also have a dataframe of differentially expressed genes with [BRD4-Knockdown in MR42D](https://ohsu.box.com/s/xea7lcz848idtttiw808vabvmja5jnj8). What genes are BRD4-bound, and are differentially expressed with siBRD4? I understand that seems like a big task, but lets break it down into steps:
 1.   Download the Dataframes and import into R Studio
@@ -75,7 +76,15 @@ Merge the datasets
 BRD4_DE_Peaks <- merge(siBRD4_DE, BRD4_Peaks, by.x = 'Gene_Symbol', by.y = 'Gene.Name')
 ```
 
-Congrats, `BRD4_DE_Peaks` is a list of genes are BRD4-bound, and going differentially expressed with siBRD4!
+Congrats, `BRD4_DE_Peaks` is a list of genes are BRD4-bound, and differentially expressed with siBRD4!
+
+R objects don't get saved automatically, so if you want to save this table for later we'll need to export the R object as a .txt or .csv file.
+ You can do this with the `write.table` command, write.table is formatted:
+`write.table(object_name, 'filename.txt', row.name = FALSE, col.names = TRUE, sep = '\t')`
+```r
+write.table(BRD4_DE_Peaks, "MR42D_BRD4_DE_Peaks.txt", col.names = TRUE, row.names = FALSE, sep = '\t')
+```
+col.names and row.names are TRUE if you want to save the row/column name, and false if you want to drop the names in the output file. The `sep = '\t'` argument, tells R to export the object as a tab-separated text file.
 
 Next we'll create a heatmap of these genes.
 

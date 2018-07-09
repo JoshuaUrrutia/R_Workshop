@@ -11,7 +11,8 @@ library(ComplexHeatmap)
 
 Now, there are a lot of columns in our dataframe that we don't want in the heatmap. P-values, expression levels in individual samples. For the most part, we just want to save gene names and the log2FC values. You can drop columns similar to subsetting, just add a minus sign `-`.
 ```r
-de_heatmap <- BRD4_DE_genes_with_peaks[,-c(1,3,5,7,9:21)]
+de_heatmap <- BRD4_DE_Peaks[,-c(1,3,5,7,9:21)]   # selects only the columns we want to save
+de_heatmap <- unique(de_heatmap)    # removes rows that are exactly the same
 ```
 Now all that's left is to generate the heatmap, we leave off the gene names so it only gets column names and values
 

@@ -4,7 +4,7 @@ layout: default
 
 
 # Introduction to R
-R is Turing Complete programming language, which means you can use R to do anything you can do in any other programming language. However, certain operations are easier to do in R and other operations are easier in other languages. For example R is really good at working with dataframes and vectors, but is a little clunky when trying to manipulate strings of text. R is free, open-source, and has a large enthusiastic community of developers particularly for statistics and data science applications.
+R is Turing Complete programming language, which means you can use R to do anything you can do in any other programming language. However, certain operations are easier to do in R and other operations are easier in other languages. For example, R is really good at working with dataframes and vectors, but is a little clunky when trying to manipulate strings of text. R is free, open-source, and has a large enthusiastic community of developers, particularly for statistics and data science applications.
 
 
 ## Downloading R and R Studio
@@ -23,7 +23,7 @@ Before we start working with R we will need to download R and R Studio. R Studio
 ### About R Studio
 ![R Studio IDE](../images/rstudio_info.png)
 1.  In the top left we have the "Code Editor", this is a good place to construct your R Scripts and commands, once you have a workable script you can save it and resuse it later.
-2.  The bottom left corner "R Console" is where the code actually gets run, it's essentially the same as using R from the command line. Code entered into the console isn't easy to export into a clear-concise script. The console can be used for quick operations (head, tail, plot, etc.), that don't need to be added to the R script.
+2.  The bottom left corner "R Console" is where the code actually gets run, it's essentially the same as using R from the command line. Code entered into the console isn't easy to export into a clear-concise script. The console can be used for quick operations (head, tail, length, etc.), that don't need to be added to the R script.
 3.  The top right is the "Workspace and History Section", you can use this section to import data into R, and to see what objects have been loaded into your R session.
 4.  The bottom right section "Plots and files" shows any plots that you generate, the files that are in your working directory, and also displays documentation for the R tools that are installed.
 
@@ -35,37 +35,31 @@ Ok, now were ready to start using R. Open up R Studio and select a working direc
 There are five basic data types in R:
 1. Numeric (1.10, 2.5, 3.2, etc)
 2. Integer (1, 2, 3, etc)
-3. Complex (uses imaginary numbers _i_)
+3. Complex (uses imaginary numbers _i_ )
 4. Logical (TRUE, FALSE)
 5. Character (a, b, c, etc)
 
-You can use the `class()` function to find out what data type you're working with.
+You can use the `class()` function to find out what data type you're working with. As a side note comments can be added to your R Script with the `#` symbol. Anything that follows a `#` and is on the same line will be ignored.
 ```r
-a <- 'one'
-class(a)
-b <- 2.0
-class(b)
-c <- 3
-class(c)
+a <- 'one'  # assigns the value 'one' the the variable a
+class(a)    # prints the data type of a
+b <- 2.0    # assigns the value '2.0' the the variable b
+class(b)    # prints the data type of b
+c <- 3      # assigns the value '3' the the variable c
+class(c)    # prints the classdata type of c
 
-a+b
-b+c
-c+c
+a+b      # tries to add a and b
+b+c      # adds b and c
+c+c      # adds c to itself
 ```
-Notice the quotes around `one`, what happens if you don't use the quotes? R is an object-oriented programming language, so it doesn't interpret the word `one` as a character, it interprets it as an object. You created objects: a, b and c in the previous example. You can perform basic operations, like addition, on objects that have the same type. But what happens if you try to add a character and a numeric value? However, even different data types can be combined to create collections of data: vectors, lists, matrices, and data frames.
+Notice the quotes around the word `one`, what happens if you don't use the quotes? R is an object-oriented programming language, so (without quotes) it doesn't interpret the word `one` as a character, it interprets it as an object. You just created R objects a, b and c in the previous example. You can perform basic operations, like addition, on objects that have the same type. But what happens if you try to add a character and a numeric value? There is not a clear way to add a number to a character so R generates an error message. However, different data types can be combined to create collections of data: vectors, matrices, arrays, and data frames.
 
-As a side note comments can be added to your R Script with the `#` symbol. Anything that follows a `#` and is on the same line will be ignored.
 
 ### Vectors
-A vector is basically a list. You can make a vector that contains numbers or character, or a combination of the two.
+A vector is basically a list. You can make a vector that contains numbers, characters, or a combination of the two.
 ```r
 a <- c(1,2,5.3,6,-2,4) # numeric vector
 b <- c("one","two","three") # character vector
-```
-What happens to the vector data type if you create a vector that as both characters and numbers?
-```r
-c <- c("one","two","three",4,5,6)
-class(c)
 ```
 
 R uses 1-indexing (as opposed to many other languages that use 0-indexing), so to retrieve the first element of a list you can run:
@@ -79,16 +73,23 @@ a[c(1,5)]   # returns values in the 1 and 5 position
 b[c(1:3)]   # returns values from position 1, 2, and 3
 ```
 
+What happens to the vector data type if you create a vector that as both characters and numbers?
+```r
+c <- c("one","two","three",4,5,6)
+class(c)
+```
+The integer values get coerced into characters. So just because a value looks like a number, doesn't mean R has interpreted that value as a number. If you ever run into issues performing mathematical operations, check to make sure your data is of the proper type.
+
 ### Coercing data types
 There are occasions where data will get imported as a certain type, but you will want to use a different type. You can coerce data from one type to another using the `as.datatype()` commands:
 ```r
-a <- as.character(a)
+a <- as.character(a)    # converts numeric a values to characters
 class(a)
-b <- as.numeric(b[3,4,5])
-class(b)
+c <- as.numeric(c[4:6])  # converts character values from c (4-6) to numeric 
+class(c)
 ```
 
-Be careful because not all coercions work. For example converting from character -> numeric will not typically work.
+Be careful because not all coercions work, and some coercions can corrupt your data. For example converting from character -> numeric will not typically work.
 
 ### Data Frames
 
