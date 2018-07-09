@@ -4,7 +4,7 @@ layout: default
 
 
 # Introduction to R
-R is Turing Complete programming language, which means you can use R to do anything you can do in any other programming language. However, certain operations are easier to do in R and other operations are easier to do in other languages. For example R is really good at working with dataframes and vectors, but is a little clunky when trying to manipulate strings of text. R is free, open-source, and has a large enthusiastic community of developers particularly for statistics and data science applications.
+R is Turing Complete programming language, which means you can use R to do anything you can do in any other programming language. However, certain operations are easier to do in R and other operations are easier in other languages. For example R is really good at working with dataframes and vectors, but is a little clunky when trying to manipulate strings of text. R is free, open-source, and has a large enthusiastic community of developers particularly for statistics and data science applications.
 
 
 ## Downloading R and R Studio
@@ -40,7 +40,7 @@ There are five basic data types in R:
 5. Character (a, b, c, etc)
 
 You can use the `class()` function to find out what data type you're working with.
-```
+```r
 a <- 'one'
 class(a)
 b <- 2.0
@@ -52,46 +52,50 @@ a+b
 b+c
 c+c
 ```
-Notice the quotes around `one`, what happens if you don't use the quotes? R is an object-oriented programming language, so it doesn't interpret the word `one` as a character, it interprets it as an object. You created objects: a, b and c in the previous example.These data types can be combined to create collections of data: vectors, lists, matrices, and data frames. As a side note comments can be added to your R Script with the `#` symbol. Anything that follows a `#` and is on the same line will be ignored.
+Notice the quotes around `one`, what happens if you don't use the quotes? R is an object-oriented programming language, so it doesn't interpret the word `one` as a character, it interprets it as an object. You created objects: a, b and c in the previous example. You can perform basic operations, like addition, on objects that have the same type. But what happens if you try to add a character and a numeric value? However, even different data types can be combined to create collections of data: vectors, lists, matrices, and data frames.
+
+As a side note comments can be added to your R Script with the `#` symbol. Anything that follows a `#` and is on the same line will be ignored.
 
 ### Vectors
 A vector is basically a list. You can make a vector that contains numbers or character, or a combination of the two.
-```
+```r
 a <- c(1,2,5.3,6,-2,4) # numeric vector
 b <- c("one","two","three") # character vector
 ```
-What happens if you create a vector that as both characters and numbers?
-```
+What happens to the vector data type if you create a vector that as both characters and numbers?
+```r
 c <- c("one","two","three",4,5,6)
 class(c)
 ```
 
 R uses 1-indexing (as opposed to many other languages that use 0-indexing), so to retrieve the first element of a list you can run:
-```
+```r
 a[1]
 b[1]
 ```
 Or if you want particular values, you can request them explicitly by their index position:
+```r
+a[c(1,5)]   # returns values in the 1 and 5 position
+b[c(1:3)]   # returns values from position 1, 2, and 3
 ```
-a[c(1,5)]
-b[c(1,3)]
-```
-
-Elements can also be combined into matrices and arrays. Matrices are two-dimensional representations (columns and rows) of elements, all the elements must be the same type and all columns must be the same length. Arrays are similar to matrices but can have more than two dimensions. We aren't going to go into explore matrices or arrays in detail. Instead we'll focus on data frames.
 
 ### Coercing data types
-There are occasions where data will get imported as a certain type, but you will want to use a different type. You can coercie data from one type to another using the `as.datatype()` commands:
-```
+There are occasions where data will get imported as a certain type, but you will want to use a different type. You can coerce data from one type to another using the `as.datatype()` commands:
+```r
 a <- as.character(a)
 class(a)
 b <- as.numeric(b[3,4,5])
 class(b)
 ```
 
+Be careful because not all coercions work. For example converting from character -> numeric will not typically work.
 
 ### Data Frames
-Data frames are similar to matrices but more general, all columns in a dataframe don't have to have the same data type (you can mix numeric and characters). Let's construct and example data frame of RNA-seq counts:
-```
+
+Vectors be combined into matrices, arrays, and dataframes. Matrices are two-dimensional representations (columns and rows) of elements where all the elements are same type and all columns are same length. Arrays are similar to matrices, but can have more than two dimensions. We aren't going to explore matrices or arrays in detail. Instead we'll focus on data frames.
+
+Data frames are similar to matrices but more general; all columns in a dataframe don't have to have the same data type (you can mix numeric and characters). Let's construct and example data frame of RNA-seq counts:
+```r
 d <- c("KLK3","AR","CHGA","SYP") # vector of gene names
 e <- c(500,200,0,0)    # vector of gene counts for LNCap
 f <- c(0,0,100,300)    # vector of gene counts for LASCPC

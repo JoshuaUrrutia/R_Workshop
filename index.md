@@ -14,5 +14,5 @@ layout: default
 
 ## Day 2
 
-*   Creating Heatmaps
+*   [Creating Heatmaps](docs/heatmaps.md)
 *   Converting Gene Ids
