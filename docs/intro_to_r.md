@@ -18,7 +18,7 @@ Before we start working with R we will need to download R and R Studio. R Studio
 ### To install R and R Studio for Mac OS X:
 *   [Download R](https://ftp.osuosl.org/pub/cran/bin/macosx/R-3.5.0.pkg)
 *   [Download R Studio](https://download1.rstudio.org/RStudio-1.1.453.dmg)
-*   [R for Legacy Mac OS](https://ftp.osuosl.org/pub/cran/])
+*   [R for Legacy Mac OS](https://ftp.osuosl.org/pub/cran/)
 
 ### About R Studio
 ![R Studio IDE](../images/rstudio_info.png)
@@ -85,7 +85,7 @@ There are occasions where data will get imported as a certain type, but you will
 ```r
 a <- as.character(a)    # converts numeric a values to characters
 class(a)
-c <- as.numeric(c[4:6])  # converts character values from c (4-6) to numeric 
+c <- as.numeric(c[4:6])  # converts character values from c (4-6) to numeric
 class(c)
 ```
 

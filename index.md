@@ -15,4 +15,4 @@ layout: default
 ## Day 2
 
 *   [Creating Heatmaps](docs/heatmaps.md)
-*   Converting Gene Ids
+*   [Advanced Integrations](docs/advanced_integrations.md)

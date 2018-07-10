@@ -107,4 +107,4 @@ BRD4_DE_genes_with_peaks <- siBRD4_DE[siBRD4_DE$Gene_Symbol %in% peak_list,]
 
 
 
-Previous: [Dataframe Operations](dataframe_ops.md) | Next: [Heatmaps](heatmaps.md) |Top: [Course Overview](../index.md)
+Previous: [Introduction to R](intro_to_r.md) | Next: [Heatmaps](heatmaps.md) |Top: [Course Overview](../index.md)
