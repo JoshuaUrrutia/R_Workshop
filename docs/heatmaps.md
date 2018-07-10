@@ -47,7 +47,7 @@ library(circlize)
 Heatmap(de_heatmap[,-1], col = colorRamp2(c(-2, 0, 2), c("blue", "white", "red")))
 ```
 
-That's still a lot of genes, so let's subset the `de_heatmap` dataframe so we create a heatmap of only the genes that have a log2FC value of less than -0.5 in the siBRD4 condition:
+That's still too many genes to be able to read, so let's subset the `de_heatmap` dataframe to create a heatmap of only the genes that have a log2FC value of less than -0.5 in the siBRD4 condition:
 ```r
 Heatmap(de_heatmap[de_heatmap$siBRD4 < -0.5,-1], col = colorRamp2(c(-1, 0, 1), c("blue", "white", "red")))
 ```

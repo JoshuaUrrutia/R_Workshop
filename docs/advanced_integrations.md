@@ -19,12 +19,12 @@ The above loop prints out elements of `list1` and stops when it gets to the end 
 file_list = list.files(pattern="*.txt")      # lists all the files in your working directory that end in '.txt'
 
 for (file in file_list) {
-   assign(file, read.table(file, header = TRUE))       #   reads the file as an R object with the same file name
-   d=get(file)            #   uses a temporary dataframe, d, instead of the file
-   d <- d[d$p.value < 0.05,]           #   filters the dataframe for stastically significant MRs
-   names(d)[names(d) == 'NES'] <- file         #   renames the NES column to be the same name as the file
-   d <- d[,c("Regulon",file)]                  #   saves only the regulon name, and the NES column and gets rid of other columns
-   assign(file,d)                      #   saves the dataframe d under the original file name
+   assign(file, read.table(file, header = TRUE))    # reads the file as an R object with the same file name
+   d=get(file)                                      # uses a temporary dataframe, d, instead of the file
+   d <- d[d$p.value < 0.05,]                        # filters the dataframe for stastically significant MRs
+   names(d)[names(d) == 'NES'] <- file              # renames the NES column to be the same name as the file
+   d <- d[,c("Regulon",file)]                       # saves only the regulon name, and the NES column and gets rid of other columns
+   assign(file,d)                                   # saves the dataframe d under the original file name
 }
 ```
 
@@ -34,7 +34,7 @@ strlist <- paste(files_list, collapse = ",")   # creates a comma-seperated list 
 noquote(strlist)                               # prints the comman-seperated list without quotes around the file names
 ```
 
-Now that we have the file names without quotes (remember R objects don't have quotes around them), we can pass those to the `Reduce` function. Basically what's happeneing here is were are using `Reduce` to iterate over the merge function and performing an outer join so we save all values (`all=TRUE`).
+Now that we have the file names without quotes (remember R objects don't have quotes around them), we can copy/paste those into the `Reduce` function. Basically what's happening here is were are using `Reduce` to iterate over the merge function and performing an outer join so we save all values (`all=TRUE`).
 
 ```r  
 all_MRs <- Reduce(function(x,y) merge(x,y, all=TRUE), list(Cx_12wk_vs_Pre_Cx.txt,Cx_8wk_vs_Pre_Cx.txt,LNCaP_APIPC_vs_LNCaP_APIPC_R1881.txt,LNCap_MDV_vs_LNCaP_Veh.txt,LNCaP_shAR_vs_LNCaP_shAR_R1881.txt,MR42D_666_15_vs_MR42D_Veh.txt,MR42D_ARV_771_vs_MR42D_Veh.txt,MR42D_JQ1_vs_MR42D_Veh.txt,MR42D_SP2509_vs_MR42D_Veh.txt,MR42D_Washout_MDV_vs_LNCaP_Veh.txt,MR42D_Washout_MDV_vs_MR42D_Washout_Veh.txt,MR42D_Washout_MDV_vs_V16D_Veh.txt,MR42F_MDV_vs_MR42F_Washout_Veh.txt,MR42F_Washout_MDV_vs_LNCaP_Veh.txt,MR42F_Washout_MDV_vs_MR42F_Washout_Veh.txt,MR42F_Washout_MDV_vs_V16D_Veh.txt,MR49F_MDV_vs_LNCaP_Veh.txt,MR49F_MDV_vs_MR49F_veh.txt,MR49F_MDV_vs_V16D_Veh.txt,Relapsed_vs_Cx_12wk.txt,Relapsed_vs_Cx_8wk.txt,Relapsed_vs_Pre_Cx.txt,siBRD4_vs_siNTC.txt,siCREB1_vs_siNTC.txt,siEP300_vs_siNTC.txt,V16D_MDV_vs_V16D_Veh.txt))
@@ -56,19 +56,19 @@ final <- unique(final)                                               # gets rid 
 final <- final[rowSums(is.na(final)) != ncol(final),]                # gets rid of na rows
 rownames(final) <- final[,1]                                         # renames row
 ```
-
+Now that we've merged Alana's correlation scores with the VIPER MR scores, let use another loop to create some new columns. This loop adds on a new column (named `direction.file_name`) for every VIPER MR column. There is some logic so that it assigns the value "same" if the MR is going in the same direction as Alana's AR correlation, and "different" if the MR score is in the opposite direction as the AR correlation.
 ```r
 for (file in file_list) {
   final[[paste("direction", file ,sep=".")]] <- ifelse((final$AR_Correlation * final[[file]] > 0),"same", "different")
 }
 ```
-
+And now we can save the dataframe:
 ```r
 write.table(final, "Alana_Correlation_VIPER_MR_overlap.txt", col.names = TRUE, row.names = FALSE, sep = '\t')
 ```
 
 ### Working with Uniprot Ids
-Data that we get back from proteomics, namely mass-spec data, often has Uniprot accession Ids and Uniprot gene names as identifiers. While there are many genes that have the same Uniprot and Ensembl gene name, there are a significant number of genes that have different identifiers. When integrating mass spec and HTS data, it is often desirable to convert gene identifiers to a common format. We'll convert Uniprot gene names to Ensembl gene names, and integrate proteomics data with our RNA-seq.
+Data that we get back from proteomics, namely mass-spec data, often has Uniprot accession Ids and Uniprot gene names as identifiers. While there are many genes that have the same Uniprot and Ensembl gene name, there are a significant number of genes that have different identifiers. When integrating mass spec and HTS data, it is best to convert gene identifiers to a common format. We'll convert Uniprot gene names to Ensembl gene names, and integrate proteomics data with our RNA-seq.
 
 Download the BRD4 mass spec data, load it into R, and print out the Uniprot accession numbers:
 
@@ -111,7 +111,12 @@ de_heatmap <- merge(de_heatmap, hm_ensembl_mapping, by.x = 'Gene_Symbol', by.y =
 ```
 And finally we can use merge to do an inner join of our heatmap and our mass spec data:
 ```r
-de_heatmap <- merge(de_heatmap, BRD4_DSG_Mass_Spec, by.x= 'ensembl_gene_id', by.y = 'To')
+Mass_spec_DE_genes <- merge(de_heatmap, BRD4_DSG_Mass_Spec, by.x= 'ensembl_gene_id', by.y = 'To')
 ```
+
+Now we have a dataframe `Mass_spec_DE_genes`, that includes log2FC values and mass spec counts for BRD4.
+
+## Closing Remarks
+Congratulations on completing this R workshop! I know there's a lot to take in from the past two days, but hopefully this website will be a useful resource for you when working with R in the future. Don't be afraid to try new things, you will fail, corrupt data, and get frustrating errors, but as you become more comfortable with R you'll be able to explore and visualize the data in new and interesting ways. Feel free to reach out to me if you have any questions, and good luck!
 
 Previous: [Heatmaps](heatmaps.md)|Top: [Course Overview](../index.md)
