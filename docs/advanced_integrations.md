@@ -30,7 +30,7 @@ for (file in file_list) {
 
 Now that we have all of our files imported and filtered for significance, we can merge them all into a single dataframe. First lets run a couple of simple commands to spit out the list of files separated by commas:
 ```r
-strlist <- paste(files_list, collapse = ",")   # creates a comma-seperated list of the files
+strlist <- paste(file_list, collapse = ",")   # creates a comma-seperated list of the files
 noquote(strlist)                               # prints the comman-seperated list without quotes around the file names
 ```
 
