@@ -3,8 +3,10 @@
 R does not natively support heatmaps. Luckily there are multiple R packages that support heatmap generation. One of my favorites is complex heatmap.
 We will install the complex heatmap package from bioconductor. Bioconductor distrubites a variety of R packages that are associated with biology, to run the install type:
 ```r
-source("https://bioconductor.org/biocLite.R")
-biocLite("ComplexHeatmap")
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+BiocManager::install(version = "3.10")
+BiocManager::install("ComplexHeatmap")
 ```
 Complex heatmap is now installed on your computer, and you won't need to install it again. However, each time you want to use complex heatmap, you will need to load it into you R enviornment. You can do this by typing:
 ```r
@@ -13,6 +15,7 @@ library(ComplexHeatmap)
 
 Now, let's import our `MR42D_MRD4_DE_Peaks` dataframe from yesterday. There are a lot of columns in our dataframe that we don't want in the final heatmap: p-values, expression levels in individual samples, ChIP peak regions, etc. For the most part, we just want to save gene names and the log2FC values. You can drop columns similar to subsetting, just add a minus sign `-`.
 ```r
+MR42D_BRD4_DE_Peaks <- read.delim("MR42D_BRD4_DE_Peaks.txt")
 de_heatmap <- MR42D_BRD4_DE_Peaks[,-c(2,3,5,7,9:39)]   # selects only the columns we want to save
 de_heatmap <- unique(de_heatmap)    # removes rows that are exactly the same
 ```
@@ -36,6 +39,7 @@ So it looks like some of the same genes have different ensemble ids (transcript 
 `aggregate(dataframe_to_aggregate, by = field_to_aggregate_on, function, na.rm = get_rid_of_na_values?)`
 ```r
 de_heatmap <- aggregate(de_heatmap[, -c(1)], by = list(de_heatmap$Gene_Symbol), mean, na.rm = TRUE)
+rownames(de_heatmap) <- de_heatmap$Gene_Symbol
 ```
 
 Now we can set the rownames, rename our columns to have shorter labels, and rescale the coloring on our heatmap so it is centered on 0:

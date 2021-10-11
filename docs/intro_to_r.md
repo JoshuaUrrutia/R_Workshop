@@ -20,6 +20,15 @@ Before we start working with R we will need to download R and R Studio. R Studio
 *   [Download R Studio](https://download1.rstudio.org/RStudio-1.1.453.dmg)
 *   [R for Legacy Mac OS](https://ftp.osuosl.org/pub/cran/)
 
+### Running R Studio from a Docker Container:
+*   [Install Docker](https://docs.docker.com/get-docker/)
+*   Run container:
+```
+docker run --rm -v $PWD:/home/rstudio -v ~/Downloads:/home/rstudio/Downloads -p 8787:8787 -e PASSWORD=mypassword jurrutia/rstudio:4.1.1
+```
+*   Navigate to http://localhost:8787 in a browser and login with the username "rstudio" and the password "mypassword" (from the command above)
+
+
 ### About R Studio
 ![R Studio IDE](../images/rstudio_info.png)
 1.  In the top left we have the "Code Editor", this is a good place to construct your R Scripts and commands, once you have a workable script you can save it and resuse it later.

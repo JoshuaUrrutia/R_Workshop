@@ -97,8 +97,10 @@ Now every row of `BRD4_DSG_Mass_Spec` has a column called `To`, that contains th
 
 Next, we'll need to re-add Ensembl Ids to the siBRD4 heatmap we created. Let's do this with the R package `BiomaRt`. First we'll download boimart, and create a biomart object called ensembl:
 ```r
-source("https://bioconductor.org/biocLite.R")
-biocLite("biomaRt")
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+BiocManager::install(version = "3.10")
+BiocManager::install("ComplexHeatmap")
 library(biomaRt)
 ensembl = useMart("ensembl",dataset="hsapiens_gene_ensembl")
 ```
